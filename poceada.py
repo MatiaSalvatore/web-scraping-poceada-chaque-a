@@ -25,12 +25,23 @@ def extraer_sorteos(id_sorteo):
            h5 = fecha_div.find('h5')
            if h5:
               fecha_sorteo = h5.get_text(strip=True)
+
+
         #Extracción de números
         numeros_ul = parser.find('ul', class_='results-list')
+        if not numeros_ul:
+            return None
+        items = numeros_ul.find_all('li', class_='results-list__item')
         numeros = []
-        items_lista = parser.find_all('p',class_='results-number')
-        for i in items_lista:
-            numeros.append(i.get_text(strip=True))
+        for i in items:
+            if 'headers' in i.get('class', []):
+                continue
+            parrafos = i.find_all('p',class_='results-number')
+            if len(parrafos)>=2:
+                numero = parrafos[1].get_text(strip=True)
+                if numero.isdigit():
+                    numeros.append(int(numero))
+        
         return {"fecha": fecha_sorteo, "numeros": numeros}
     except Exception:
         return None
