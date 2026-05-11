@@ -56,4 +56,7 @@ def extraer_sorteos(id_sorteo):
 #TEST
 print(extraer_sorteos(934))
 
-#
+
+#Inputs/Interacción con el usuario
+inicio = int(input("Id de Sorteo inicial "))
+fin = int(input("Id de Sorteo final "))
